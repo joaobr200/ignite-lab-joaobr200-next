@@ -1,0 +1,5 @@
+query GetAllSlugsLessons {
+  lessons {
+    slug
+  }
+}
