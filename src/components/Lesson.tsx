@@ -28,7 +28,7 @@ const Lesson = ({ title, slug, availableAt, type }: LessonProps) => {
   return (
     <a
       href={lessonIsAvailable ? `/ignite/lesson/${slug}` : "#"}
-      className={`mb-8 p-4 group relative ${
+      className={`mb-8 p-4 group relative z-50 ${
         !lessonIsAvailable && "cursor-not-allowed pointer-events-none"
       }`}
     >

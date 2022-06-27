@@ -1,15 +1,34 @@
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { CircleNotch } from "phosphor-react";
+import { CircleNotch, GithubLogo, SignIn } from "phosphor-react";
 import { useForm } from "react-hook-form";
 import Footer from "../components/Footer";
 import { Ignite } from "../components/Icons";
 import { useCreateSubscribeMutation } from "../graphql/generated";
+import { getSession, signIn } from "next-auth/react";
+import { GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/ignite",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 interface IFormInputs {
-  name: string;
   email: string;
+  password: string;
 }
 
 const Home: React.FC = () => {
@@ -18,23 +37,16 @@ const Home: React.FC = () => {
   const [createSubscribe, { loading }] = useCreateSubscribeMutation();
 
   function onSubmit(e: IFormInputs) {
-    createSubscribe({
-      variables: {
-        name: e.name,
-        email: e.email,
-      },
-      onError: (e) => console.log(e.message),
-      onCompleted: () => {},
-    });
+    console.log(e);
   }
 
   return (
     <>
       <Head>
-        <title>Ignite Lab - Garanta sua inscrição</title>
+        <title>Ignite Lab - Acesse a plataforma</title>
         <meta
           name="description"
-          content="Garanta sua inscrição ignite lab que irá ocorrer do dia 20/06/2022 até 24/06/2022, Iremos construir uma aplicação react do zero."
+          content="Acesse a plataforma ignite lab que irá ocorrer do dia 20/06/2022 até 24/06/2022, Iremos construir uma aplicação react do zero."
         />
       </Head>
       <section className="flex flex-col items-center bg-blur bg-cover bg-no-repeat min-h-screen">
@@ -52,27 +64,27 @@ const Home: React.FC = () => {
               melhores oportunidades do mercado.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center bg-gray-700 p-8 rounded">
+          <div className="flex flex-col items-center justify-center bg-gray-700 p-8 rounded w-auto lg:w-[460px] sm:w-full">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-6 w-[327px] lg:max-w-[327px] lg:w-full"
+              className="flex flex-col gap-6 w-[327px] sm:w-full"
             >
               <strong className="text-2xl text-gray-100">
-                Inscreva-se gratuitamente.
+                Acesse a plataforma
               </strong>
               <div className="flex flex-col gap-2">
                 <input
-                  {...register("name", { required: true })}
+                  {...register("email", { required: true })}
                   type="text"
-                  name="name"
-                  placeholder="Seu nome completo"
+                  name="email"
+                  placeholder="Digite seu email"
                   className="w-full h-[56px] rounded bg-gray-900 text-gray-400 p-5"
                 />
                 <input
-                  {...register("email", { required: true })}
-                  type="email"
-                  name="email"
-                  placeholder="Digite seu email"
+                  {...register("password", { required: true })}
+                  type="password"
+                  name="password"
+                  placeholder="Digite sua senha"
                   className="w-full h-[56px] rounded bg-gray-900 text-gray-400 p-5"
                 />
               </div>
@@ -82,10 +94,32 @@ const Home: React.FC = () => {
                 type="submit"
                 aria-label="Enviar inscrição da vaga"
               >
-                Garantir minha vaga
-                {loading && <CircleNotch size={22} className="animate-spin" />}
+                Acessar
+                {loading ? (
+                  <CircleNotch size={22} className="animate-spin" />
+                ) : (
+                  <SignIn size={22} />
+                )}
               </button>
+              <div className="flex items-center justify-between">
+                <a href="#" className="text-sm text-gray-200 sm:text-xs">
+                  Cadastre-se{" "}
+                </a>
+                <a href="#" className="text-sm text-gray-200 sm:text-xs">
+                  Esqueci minha senha{" "}
+                </a>
+              </div>
             </form>
+            <div className="border border-gray-300 w-full my-4"></div>
+            <button
+              type="button"
+              title="Faça login com github"
+              className="flex items-center justify-center gap-4 rounded bg-gray-900 w-full p-4 uppercase text-base font-bold transition-colors hover:bg-gray-700 sm:text-sm"
+              onClick={() => signIn("github")}
+            >
+              <GithubLogo size={22} />
+              Acesse com Github
+            </button>
           </div>
         </div>
 

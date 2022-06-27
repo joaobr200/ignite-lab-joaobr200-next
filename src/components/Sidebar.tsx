@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`w-[21.75rem] bg-gray-700 p-6 border-l z-50 border-gray-600 lg:absolute lg:right-0  lg:h-screen lg:pb-[100px] lg:overflow-auto   ${
+      className={`w-[21.75rem] h-full bg-gray-700 p-6 border-l z-[40] border-gray-600 lg:absolute lg:right-0  lg:h-screen lg:pb-[100px] lg:overflow-auto   ${
         isOpen ? "lg:animate-fadeIn" : "lg:hidden"
       }`}
     >

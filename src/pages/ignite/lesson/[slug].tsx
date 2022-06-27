@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { GetStaticPaths, GetStaticPropsContext } from "next";
+import { GetStaticPaths } from "next";
 import { client } from "../../../lib/apollo";
 import {
   GetAllSlugsLessonsQuery,
@@ -7,16 +7,10 @@ import {
   GetLessonBySlugQuery,
 } from "../../../graphql/generated";
 
-import Layout from "../../../components/Layout";
+import Sidebar from "../../../components/Sidebar";
 import Video from "../../../components/Video";
-
-interface ContextStaticProps extends GetStaticPropsContext {
-  params: {
-    slug: string;
-  };
-}
-
-export const getStaticProps = async (ctx: ContextStaticProps) => {
+import Header from "../../../components/Header";
+export const getStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
   const { data } = await client.query<GetLessonBySlugQuery>({
@@ -78,9 +72,13 @@ interface LessonProps {
 
 const Lesson = ({ lesson }: LessonProps) => {
   return (
-    <Layout>
-      {lesson ? <Video {...lesson} /> : <div className="flex flex-1"></div>}
-    </Layout>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex flex-1">
+        {lesson ? <Video {...lesson} /> : <div className="flex flex-1"></div>}
+        <Sidebar />
+      </main>
+    </div>
   );
 };
 
