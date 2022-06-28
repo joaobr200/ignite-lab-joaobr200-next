@@ -8,6 +8,8 @@
 ## 🧰 Tools
 
 - [React](https://reactjs.org/)
+- [Next](https://nextjs.org)
+- [Next-Auth](https://next-auth.js.org)
 - [TailwindCSS](https://tailwindcss.com)
 - [Apollo](https://www.apollographql.com)
 - [GraphQL](https://graphql.org)
