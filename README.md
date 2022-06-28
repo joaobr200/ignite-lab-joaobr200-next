@@ -21,6 +21,10 @@ Codei a aplicação toda do zero, mas agora utilizando next, foi implementando r
 
 A lista de aula foi deixado padrão, sempre que usuário acessa a plataforma ele busca na API e se adicionarmos uma nova aula, elá sera listado e usuário poderá acessa=lá tranquilamente, pois o fallback está ativado e ela sera buscado na API.
 
+<div>
+  <img src="/.github/login.gif" />
+</div>
+
 ## 🙅🏽‍♂️ Author
 
 - **João Vitor** - [Joaobr200](https://github.com/joaobr200)
